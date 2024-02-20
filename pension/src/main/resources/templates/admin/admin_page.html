@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src='static/js/admin/calendar.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/admin/main/style.css">
+</head>
+
+<body>
+
+<div id="wrap">
+
+    <div th:insert="~{admin/fragment/side.html::side_f}"></div>
+    <div class="main-wrap">
+        <div th:insert="~{admin/fragment/header.html::header_f}"></div>
+        <main>
+            <section>
+                <div class="section-wrap">
+                    <div class="section-container">
+                        <div class="section-title">
+                            <h4 class="reserve-title">
+                                <a href="/admin/reserveList">예약일정</a>
+                            </h4>
+                        </div>
+                        <div class="section-content">
+                            <div id='calendar'></div>
+                            <div class="color-room">
+                                <div class="color-room-A"></div>
+                                <span>A동</span>
+                                <div class="color-room-B"></div>
+                                <span>B동</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-container">
+                        <div class="section-title">
+                            <h4>
+                                <a href="/admin/reserveList">예약 관리</a>
+                            </h4>
+                        </div>
+                        <div class="section-box">
+                            <form class="top-search">
+                                    <span class="cnt-wrap">
+                                        전체 예약 수 : [[${reserveCnt}]]개
+                                    </span>
+                            </form>
+                            <table class="admin-table reserve-table">
+                                <thead>
+                                    <tr>
+                                        <th>번호</th>
+                                        <th>객실</th>
+                                        <th>예약자</th>
+                                        <th>체크인</th>
+                                        <th>체크아웃</th>
+                                        <th>결제상태</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="rl, i:${reserveList}">
+                                        <td>
+                                            [[${reserveCnt - ((reservePage.page -1) * reservePage.pageCount) - i.index}]]
+                                        </td>
+                                        <td>[[${rl.roomName}]]동</td>
+                                        <td>[[${rl.reserveName}]]</td>
+                                        <td>[[${rl.checkin}]]</td>
+                                        <td>[[${rl.checkout}]]</td>
+                                        <td>
+                                            <th:block th:if="${rl.settlementState eq 1}">
+                                                결제 완료
+                                            </th:block>
+                                            <th:block th:unless="${rl.settlementState eq 1}">
+                                                결제 취소
+                                            </th:block>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="preview">
+                                <a href="/admin/reserveList">더보기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="section-wrap">
+                    <div class="section-container">
+                        <div class="section-title">
+                            <h4>
+                                <a href="/admin/notice">공지사항</a>
+                            </h4>
+                        </div>
+                        <div class="section-box">
+                            <form class="top-search">
+                                    <span class="cnt-wrap">
+                                        전체 공지 수 : [[${noticeCnt}]]개
+                                    </span>
+                            </form>
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>조회수</th>
+                                        <th>등록일</th>
+                                        <th>첨부<br />파일</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="notice, j:${notice}">
+                                        <td>
+                                            [[${noticeCnt - ((noticePage.page -1) * noticePage.pageCount) - j.index}]]
+                                        </td>
+                                        <td>[[${notice.boardNoticeSubject}]]</td>
+                                        <td>[[${notice.boardNoticeWriter}]]</td>
+                                        <td>[[${notice.boardNoticeVisit}]]</td>
+                                        <td>[[${notice.boardNoticeRegdate}]]</td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="preview">
+                                <a href="/admin/notice">더보기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-container">
+                        <div class="section-title">
+                            <h4>
+                                <a href="/admin/members">회원관리</a>
+                            </h4>
+                        </div>
+                        <div class="section-box">
+                            <form class="top-search">
+                                    <span class="cnt-wrap">
+                                        전체 회원 수 : [[${memberCnt}]]명
+                                    </span>
+                            </form>
+                            <table class="admin-table member-table">
+                                <tr>
+                                    <th>번호</th>
+                                    <th>아이디</th>
+                                    <th>이름</th>
+                                    <th>전화번호</th>
+                                    <th>이메일</th>
+                                </tr>
+                                <tr th:each="m, k: ${mem}">
+                                    <td>
+                                        [[${memberCnt - ((memberPage.page -1) * memberPage.pageCount) - k.index}]]
+                                    </td>
+                                    <td>[[${m.userid}]]</td>
+                                    <td>[[${m.name}]]</td>
+                                    <td>[[${m.phone}]]</td>
+                                    <td>[[${m.email}]]</td>
+                                </tr>
+                            </table>
+                            <div class="preview">
+                                <a href="/admin/members">더보기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="section-wrap">
+                    <div class="section-container">
+                        <div class="section-title">
+                            <h4>
+                                <a href="/admin/qna">QnA</a>
+                            </h4>
+                        </div>
+                        <div class="section-box">
+                            <form class="top-search">
+                                    <span class="cnt-wrap">
+                                        전체 질문 수 : [[${qnaCnt}]]개
+                                    </span>
+                            </form>
+                            <table class="admin-table">
+                                <tr>
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>조회수</th>
+                                    <th>등록일</th>
+                                    <th>답변<br />여부</th>
+                                </tr>
+                                <tr th:each="qna, l: ${qna}">
+                                    <td>
+                                        [[${qnaCnt - ((qnaPage.page -1) * qnaPage.pageCount) - l.index}]]
+                                    </td>
+                                    <td>[[${qna.boardQnaSubject}]]</td>
+                                    <td>[[${qna.boardQnaWriter}]]</td>
+                                    <td>[[${qna.boardQnaVisit}]]</td>
+                                    <td>[[${qna.boardQnaRegdate}]]</td>
+                                    <td>
+                                        <th:block th:if="${qna.boardAnswerCheck eq 1}">
+                                            <a th:href="@{/board/qna/view?(id=${qna.boardQnaId})}">
+                                                <span class="complete-answer">O</span>
+                                            </a>
+                                        </th:block>
+                                        <th:block th:unless="${qna.boardAnswerCheck eq 1}">
+                                            <a th:href="@{/board/qna/view?(id=${qna.boardQnaId})}">
+                                                <span class="pre-answer">X</span>
+                                            </a>
+                                        </th:block>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="preview">
+                                <a href="/admin/qna">더보기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-container">
+                        <div class="section-title">
+                            <h4>
+                                <a href="/admin/roomSetting">객실정보</a>
+                            </h4>
+                        </div>
+                        <div class="section-box">
+                            <form class="top-search">
+                                    <span class="cnt-wrap">
+                                        전체 객실 수 : [[${roomListCnt}]] 개
+                                    </span>
+                            </form>
+                            <table class="admin-table room-list">
+                                <tr>
+                                    <th>객실 이름</th>
+                                    <th>사진</th>
+                                    <th>인원 수</th>
+                                    <th>가격</th>
+                                    <th>입실 / 퇴실</th>
+                                </tr>
+                                <tr th:each="roomList : ${roomList}">
+                                    <td>[[${roomList.roomName}]]</td>
+                                    <td>
+                                        <img th:src="@{|/static/roomImages/${roomList.roomName}/${roomList.roomName}_thumbnail.jpg|}" onerror="this.src='/static/images/none1_img.jpg'" alt="">
+                                    </td>
+                                    <td>최소 : [[${roomList.minPerson}]], 최대 : [[${roomList.maxPerson}]] (기준 [[${roomList.minPerson}]]인)</td>
+                                    <td>[[${roomList.roomPrice}]]원</td>
+                                    <td>[[${roomList.checkinTime}]] ~ [[${roomList.checkoutTime}]]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<script>
+    let today_date = new Date().getDate();
+    let today_month = new Date().getMonth() + 1;
+    let today_year = new Date().getFullYear();
+
+    if(today_date < 10) {
+        today_date = "0"+today_date;
+    }
+    if(today_month < 10) {
+        today_month = "0"+today_month;
+    }
+
+    let today = today_year + "-" +today_month + "-" + today_date;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        $.ajax({
+            type: "get",
+            url: "/admin/cldList",
+            dataType: "json",
+            success: function(result) {
+
+                let obj = [];
+                for(let i=0; i<result.cldList.length; i++) {
+                    let color;
+                    if(result.cldList[i].roomName == "A") {
+                        color = "#ff9f89";
+                    }else if(result.cldList[i].roomName == "B") {
+                        color = "#406fdf";
+                    }
+                    obj[i] = {
+                        title: result.cldList[i].reserveName,
+                        start: result.cldList[i].checkin,
+                        end: result.cldList[i].checkout,
+                        display: "daygrid",
+                        color: color
+                    }
+                }
+                console.log(obj);
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                    },
+                    initialDate: today,
+                    navLinks: true,
+                    editable: false,
+                    dayMaxEvents: true,
+                    events: obj
+                });
+                calendar.render();
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

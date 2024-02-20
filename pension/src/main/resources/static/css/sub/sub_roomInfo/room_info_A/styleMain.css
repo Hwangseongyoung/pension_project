@@ -1,0 +1,228 @@
+#wrap {
+  width: 100%;
+}
+
+header {
+  background-color: rgba(225, 232, 234, 0.82);
+  width: 100%;
+  height: 100px;
+  transition: 0.2s;
+}
+
+.header-wrap {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  padding-top: 15px;
+}
+
+.logo img {
+  width: 100%;
+}
+
+.nav-box {
+  width: 80%;
+  height: 100px;
+}
+
+.users {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  height: 45px;
+}
+
+.users li {
+  margin-left: 15px;
+  line-height: 45px;
+}
+
+.users li a {
+  font-size: 12px;
+}
+
+nav {
+  float: right;
+  width: 700px;
+  height: 55px;
+  /* display: flex; */
+}
+
+.nav-main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-menu {
+  height: 55px;
+  font-size: 20px;
+  line-height: 55px;
+  text-align: center;
+}
+
+.main-menu:hover {
+  border-bottom: 2px solid #fff;
+}
+
+.main-menu a {
+  color: #000;
+  font-weight: 500;
+}
+
+.sub-menu {
+  visibility: hidden;
+  z-index: 9999;
+}
+
+.sub-menu li {
+  font-size: 16px;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 5px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  /* border-bottom: 1px solid #fff; */
+}
+
+.sub-menu li:hover {
+  background-color: #adadad;
+}
+
+.sub-menu li:first-child {
+  border-radius: 5px 5px 0 0;
+}
+
+.sub-menu li:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+.sub-title-wrap {
+  width: 100%;
+  height: 300px;
+  background-image: linear-gradient(rgba(84, 84, 84, 0.5),
+      rgba(84, 84, 84, 0.5)),
+    url("/static/images/s12.jpeg");
+  background-repeat: no-repeat;
+  background-position: 50% 30%;
+  background-size: cover;
+}
+
+.sub-title-bg {
+  max-width: 1200px;
+  height: 300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.sub-title {
+  font-size: 30px;
+  color: #fff;
+}
+
+.sub-title-txt {
+  font-size: 18px;
+  color: #fff;
+}
+
+.line {
+  margin: 5px 0 12px 0;
+  width: 100px;
+  height: 2px;
+  background-color: #fff;
+}
+
+/* main 시작 */
+
+.room_service p,
+.room_service2 p {
+  padding-bottom: 10px;
+  font-size: 16px;
+}
+
+.room-info-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 150px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sub-navigate-nav {
+  width: 10%;
+}
+
+.sub-navigate-nav h4 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.sub-navigate-nav li {
+  margin-bottom: 5px;
+}
+
+.sub-navigate-nav li a:hover {
+  color: tomato;
+}
+
+.main-wrapper {
+  width: 100%;
+  margin-left: 80px;
+}
+
+.room_select_alert {
+  margin-bottom: 80px;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+}
+
+.room-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 200px;
+  box-shadow: 0 0 5px 1px #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.room-list-wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10%;
+  row-gap: 20px
+}
+
+.img-area {
+  width: 70%;
+}
+
+.room-list img {
+  width: 100%;
+  height: 210px;
+}
+
+.room-list-txt {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.room-list-txt h3 {
+  margin-bottom: 10px;
+}
+
+.room-list-txt p {
+  line-height: 2;
+}
